@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-theme="auto"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fujairah Tank Farm SCADA Guide 2026</title>
+<meta name="description" content="Step-by-step 2026 execution guide for a Siemens PCS 7 tank farm SCADA project at Port of Fujairah, UAE: phases, simulator, calculators and reference.">
+<meta name="theme-color" content="#D9531E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fujairah SCADA">
+<meta property="og:type" content="website"><meta property="og:title" content="Fujairah Tank Farm SCADA Guide 2026">
+<meta property="og:description" content="PCS 7 / S7-410H tank farm automation: execution phases, ring simulator, field calculators.">
+<meta property="og:image" content="https://esp046-cyber.github.io/tankfarmingguide/assets/og-image.png"><meta property="og:url" content="https://esp046-cyber.github.io/tankfarmingguide/">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Fujairah Tank Farm SCADA Guide 2026">
+<meta name="twitter:description" content="PCS 7 / S7-410H tank farm automation guide for Port of Fujairah."><meta name="twitter:image" content="https://esp046-cyber.github.io/tankfarmingguide/assets/og-image.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="stylesheet" href="./css/styles.css">
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="brand"><img src="./icons/icon-96.png" alt="" width="36" height="36"><div><strong>Fujairah SCADA</strong><small>Tank Farm Guide 2026</small></div></div>
+<div class="actions"><button id="installBtn" class="btn" hidden>Install app</button><button id="themeBtn" class="btn ghost" aria-label="Change theme">Theme: auto</button></div></header>
+<nav class="nav" aria-label="Main"><ul role="tablist">
+<li><a href="#overview" role="tab" data-r="overview"><span aria-hidden="true">&#9673;</span>Overview</a></li>
+<li><a href="#phases" role="tab" data-r="phases"><span aria-hidden="true">&#10003;</span>Phases</a></li>
+<li><a href="#architecture" role="tab" data-r="architecture"><span aria-hidden="true">&#9638;</span>Network</a></li>
+<li><a href="#calculators" role="tab" data-r="calculators"><span aria-hidden="true">&#8721;</span>Calcs</a></li>
+<li><a href="#reference" role="tab" data-r="reference"><span aria-hidden="true">&#9776;</span>Lookup</a></li></ul></nav>
+<main id="main">
+<section id="overview" aria-labelledby="h-ov"><p class="kicker">Oil &amp; gas - petrochemical | Client: Port of Fujairah | United Arab Emirates</p>
+<h1 id="h-ov">Tank Farming SCADA: how to run the project</h1>
+<p class="lead">A field guide for delivering PCS 7 automation for a Fujairah tank terminal, from P&amp;ID freeze to hot commissioning.</p>
+<div class="grid">
+<article class="card"><h2>Control system</h2><p>Siemens SIMATIC S7-410-H redundant AS on PCS 7, with ET 200SP HA / ET 200M Remote I/O panels in safe and hazardous zones.</p></article>
+<article class="card"><h2>Server and client layer</h2><p>Redundant OS server pair (A/B), Engineering Station, multi-client Operator Stations, OpenPCS 7 and Historian.</p></article>
+<article class="card"><h2>Network</h2><p>Dual redundant fiber rings on SCALANCE X switches (MRP, PRP or HSR) monitored by SINEMA Server with SNMP diagnostics.</p></article>
+<article class="card"><h2>Scope</h2><p>PCS 7 system and marshalling cabinets, Remote I/O panels, fiber network panels, radar ATG with multi-spot temperature and water bottom, SIL-rated overfill protection, MOV links (Modbus, PROFIBUS, PROFINET) and jetty/manifold interlocks.</p></article></div>
+<div class="card prog"><h2>Your progress</h2><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="ovBar"><i></i></div><p id="ovTxt" aria-live="polite">0% complete</p><a class="btn" href="#phases">Open phase tracker</a></div>
+<p class="note">Planning aid only. Always confirm figures and requirements against the signed project specification, vendor manuals and Port of Fujairah / authority requirements.</p></section>
+
+<section id="phases" aria-labelledby="h-ph" hidden><h1 id="h-ph">Execution phases</h1>
+<div class="card prog"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="phBar"><i></i></div><p id="phTxt" aria-live="polite"></p>
+<div class="row"><button class="btn" id="expJson">Export JSON</button><button class="btn" id="expCsv">Export CSV</button><button class="btn ghost" id="resetPh">Reset</button><button class="btn ghost" onclick="window.print()">Print</button></div></div>
+<div id="phList"><div class="skel"></div><div class="skel"></div></div></section>
+
+<section id="architecture" aria-labelledby="h-ar" hidden><h1 id="h-ar">Architecture and ring explorer</h1>
+<p class="lead">Tap or focus any node for specs. Use the switches to simulate faults.</p>
+<div class="row sw"><label class="chk"><input type="checkbox" id="fBrk"> Break fiber ring</label><label class="chk"><input type="checkbox" id="fSrv"> Fail OS Server A</label><label class="chk"><input type="checkbox" id="fCpu"> Fail CPU A</label></div>
+<div class="card svgw"><svg id="arch" viewBox="0 0 760 400" role="img" aria-label="Tank farm network schematic"></svg></div>
+<div class="card" id="nodeInfo" aria-live="polite"><h2>Select a node</h2><p>Details and failover behaviour appear here.</p></div>
+<p id="simMsg" class="badge ok" role="status"></p></section>
+
+<section id="calculators" aria-labelledby="h-ca" hidden><h1 id="h-ca">Field calculators</h1><div class="grid">
+<form class="card" id="cTank" onsubmit="return false"><h2>Tank volume, ullage and HH</h2>
+<label>Diameter (m)<input type="number" inputmode="decimal" name="d" value="40" min="0" step="any"></label>
+<label>Shell height (m)<input type="number" inputmode="decimal" name="h" value="20" min="0" step="any"></label>
+<label>Current level (m)<input type="number" inputmode="decimal" name="l" value="12" min="0" step="any"></label>
+<label>HH setpoint (% of shell height)<input type="number" inputmode="decimal" name="hh" value="95" min="0" max="100" step="any"></label>
+<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form>
+<form class="card" id="cMa" onsubmit="return false"><h2>4-20 mA / HART scaling</h2>
+<label>Range low (EU)<input type="number" inputmode="decimal" name="lo" value="0" step="any"></label>
+<label>Range high (EU)<input type="number" inputmode="decimal" name="hi" value="20000" step="any"></label>
+<label>Loop current (mA)<input type="number" inputmode="decimal" name="ma" value="12" step="any"></label>
+<label>Or process value (EU)<input type="number" inputmode="decimal" name="pv" step="any" placeholder="optional"></label>
+<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form>
+<form class="card" id="cIo" onsubmit="return false"><h2>I/O and ring capacity</h2>
+<label>Total I/O points<input type="number" inputmode="numeric" name="io" value="1800" min="0"></label>
+<label>Spare (%)<input type="number" inputmode="numeric" name="sp" value="20" min="0"></label>
+<label>Channels per module<input type="number" inputmode="numeric" name="ch" value="16" min="1"></label>
+<label>Modules per remote station<input type="number" inputmode="numeric" name="ms" value="12" min="1"></label>
+<label>Ring devices (switches, stations, PLCs)<input type="number" inputmode="numeric" name="nd" value="60" min="0"></label>
+<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form></div></section>
+
+<section id="reference" aria-labelledby="h-re" hidden><h1 id="h-re">Tag, protocol and troubleshooting lookup</h1>
+<label class="search">Search<input type="search" id="q" placeholder="e.g. MRP, OID, 4-20, sync"></label>
+<p id="cnt" aria-live="polite" class="note"></p><div id="refList" class="grid"></div></section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="iosDlg"><h2>Add to Home Screen</h2><p>In Safari tap <strong>Share</strong>, then <strong>Add to Home Screen</strong>. The guide then opens full screen and works offline.</p><button class="btn" id="iosClose">Got it</button></dialog>
+<script src="./js/app.js"></script>
+</body></html>
