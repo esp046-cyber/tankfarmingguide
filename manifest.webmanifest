@@ -1,10 +1,10 @@
 {
-  "id": "/tankfarmingguide/",
+  "id": "./",
   "name": "Fujairah Tank Farm SCADA Guide 2026",
   "short_name": "Fujairah SCADA",
   "description": "Field and engineering execution guide for a PCS 7 tank farm automation project at Port of Fujairah.",
-  "start_url": "/tankfarmingguide/",
-  "scope": "/tankfarmingguide/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "theme_color": "#D9531E",
@@ -95,7 +95,7 @@
   "shortcuts": [
     {
       "name": "Phase tracker",
-      "url": "/tankfarmingguide/#phases",
+      "url": "./#phases",
       "icons": [
         {
           "src": "icons/icon-96.png",
@@ -105,7 +105,7 @@
     },
     {
       "name": "Calculators",
-      "url": "/tankfarmingguide/#calculators",
+      "url": "./#calculators",
       "icons": [
         {
           "src": "icons/icon-96.png",
@@ -115,7 +115,7 @@
     },
     {
       "name": "Reference",
-      "url": "/tankfarmingguide/#reference",
+      "url": "./#reference",
       "icons": [
         {
           "src": "icons/icon-96.png",

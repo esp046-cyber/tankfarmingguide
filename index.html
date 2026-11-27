@@ -22,7 +22,7 @@
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="brand"><img src="./icons/icon-96.png" alt="" width="36" height="36"><div><strong>Fujairah SCADA</strong><small>Tank Farm Guide 2026</small></div></div>
-<div class="actions"><button id="installBtn" class="btn" hidden>Install app</button><button id="themeBtn" class="btn ghost" aria-label="Change theme">Theme: auto</button></div></header>
+<div class="actions"><button id="installBtn" class="btn">Install app</button><button id="themeBtn" class="btn ghost" aria-label="Change theme">Theme: auto</button></div></header>
 <nav class="nav" aria-label="Main"><ul role="tablist">
 <li><a href="#overview" role="tab" data-r="overview"><span aria-hidden="true">&#9673;</span>Overview</a></li>
 <li><a href="#phases" role="tab" data-r="phases"><span aria-hidden="true">&#10003;</span>Phases</a></li>
@@ -30,55 +30,68 @@
 <li><a href="#calculators" role="tab" data-r="calculators"><span aria-hidden="true">&#8721;</span>Calcs</a></li>
 <li><a href="#reference" role="tab" data-r="reference"><span aria-hidden="true">&#9776;</span>Lookup</a></li></ul></nav>
 <main id="main">
+<section id="welcome" class="card welcome" hidden aria-labelledby="h-w"><h2 id="h-w">Welcome to the 2026 Fujairah Tank Farm SCADA Guide</h2>
+<p>New here? Three quick steps:</p><ol class="steps"><li><strong>Phase Tracker:</strong> follow the six project phases. Each task shows the deliverable, a Fujairah site tip and acceptance criteria. Tick tasks off and add notes.</li>
+<li><strong>Network Failover Simulator:</strong> open Network, tap any node, then break the ring or fail a server to see what the system does.</li>
+<li><strong>Field Calculators:</strong> check tank ullage and HH setpoints, scale 4-20 mA loops and size I/O. Use the sample buttons to try them instantly.</li></ol>
+<div class="row"><button class="btn" id="wSample">Try with sample data</button><button class="btn ghost" id="wClose">Got it</button></div></section>
 <section id="overview" aria-labelledby="h-ov"><p class="kicker">Oil &amp; gas - petrochemical | Client: Port of Fujairah | United Arab Emirates</p>
 <h1 id="h-ov">Tank Farming SCADA: how to run the project</h1>
 <p class="lead">A field guide for delivering PCS 7 automation for a Fujairah tank terminal, from P&amp;ID freeze to hot commissioning.</p>
 <div class="grid">
-<article class="card"><h2>Control system</h2><p>Siemens SIMATIC S7-410-H redundant AS on PCS 7, with ET 200SP HA / ET 200M Remote I/O panels in safe and hazardous zones.</p></article>
+<article class="card"><h2>Control system</h2><p>Siemens SIMATIC S7-410-H <button type="button" class="tip" data-g="s7410h" aria-label="What is S7-410-H?">?</button> redundant AS on PCS 7, with ET 200SP HA / ET 200M Remote I/O panels in safe and hazardous zones.</p></article>
 <article class="card"><h2>Server and client layer</h2><p>Redundant OS server pair (A/B), Engineering Station, multi-client Operator Stations, OpenPCS 7 and Historian.</p></article>
 <article class="card"><h2>Network</h2><p>Dual redundant fiber rings on SCALANCE X switches (MRP, PRP or HSR) monitored by SINEMA Server with SNMP diagnostics.</p></article>
 <article class="card"><h2>Scope</h2><p>PCS 7 system and marshalling cabinets, Remote I/O panels, fiber network panels, radar ATG with multi-spot temperature and water bottom, SIL-rated overfill protection, MOV links (Modbus, PROFIBUS, PROFINET) and jetty/manifold interlocks.</p></article></div>
-<div class="card prog"><h2>Your progress</h2><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="ovBar"><i></i></div><p id="ovTxt" aria-live="polite">0% complete</p><a class="btn" href="#phases">Open phase tracker</a></div>
+<div class="card"><h2>Key terms</h2><p class="note">Tap a term for a plain-English explanation and why it matters on site.</p><div class="row" id="terms"></div></div><div class="card prog"><h2>Your progress</h2><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="ovBar"><i></i></div><p id="ovTxt" aria-live="polite">0% complete</p><div class="row"><a class="btn" href="#phases">Open phase tracker</a><button class="btn ghost" id="showTour">Show quick tour</button></div></div>
 <p class="note">Planning aid only. Always confirm figures and requirements against the signed project specification, vendor manuals and Port of Fujairah / authority requirements.</p></section>
 
 <section id="phases" aria-labelledby="h-ph" hidden><h1 id="h-ph">Execution phases</h1>
 <div class="card prog"><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="phBar"><i></i></div><p id="phTxt" aria-live="polite"></p>
-<div class="row"><button class="btn" id="expJson">Export JSON</button><button class="btn" id="expCsv">Export CSV</button><button class="btn ghost" id="resetPh">Reset</button><button class="btn ghost" onclick="window.print()">Print</button></div></div>
+<div class="row"><button class="btn" id="expJson">Export JSON</button><button class="btn" id="expCsv">Export CSV</button><button class="btn" id="phSample">Load Fujairah sample data</button><button class="btn ghost" id="clrBtn">Reset / clear data</button><button class="btn ghost" onclick="window.print()">Print</button></div></div>
 <div id="phList"><div class="skel"></div><div class="skel"></div></div></section>
 
 <section id="architecture" aria-labelledby="h-ar" hidden><h1 id="h-ar">Architecture and ring explorer</h1>
-<p class="lead">Tap or focus any node for specs. Use the switches to simulate faults.</p>
+<p class="lead">Tap or focus any node for specs. Use the switches to simulate faults. <button type="button" class="tip" data-g="mrp" aria-label="What is an MRP fiber ring?">?</button><button type="button" class="tip" data-g="sinema" aria-label="What is SINEMA NMS?">?</button></p>
 <div class="row sw"><label class="chk"><input type="checkbox" id="fBrk"> Break fiber ring</label><label class="chk"><input type="checkbox" id="fSrv"> Fail OS Server A</label><label class="chk"><input type="checkbox" id="fCpu"> Fail CPU A</label></div>
 <div class="card svgw"><svg id="arch" viewBox="0 0 760 400" role="img" aria-label="Tank farm network schematic"></svg></div>
 <div class="card" id="nodeInfo" aria-live="polite"><h2>Select a node</h2><p>Details and failover behaviour appear here.</p></div>
 <p id="simMsg" class="badge ok" role="status"></p></section>
 
 <section id="calculators" aria-labelledby="h-ca" hidden><h1 id="h-ca">Field calculators</h1><div class="grid">
-<form class="card" id="cTank" onsubmit="return false"><h2>Tank volume, ullage and HH</h2>
+<form class="card" id="cTank" onsubmit="return false"><h2>Tank volume, ullage and HH <button type="button" class="tip" data-g="sil" aria-label="What is SIL-2 overfill / LAHH?">?</button></h2>
 <label>Diameter (m)<input type="number" inputmode="decimal" name="d" value="40" min="0" step="any"></label>
 <label>Shell height (m)<input type="number" inputmode="decimal" name="h" value="20" min="0" step="any"></label>
 <label>Current level (m)<input type="number" inputmode="decimal" name="l" value="12" min="0" step="any"></label>
 <label>HH setpoint (% of shell height)<input type="number" inputmode="decimal" name="hh" value="95" min="0" max="100" step="any"></label>
-<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form>
-<form class="card" id="cMa" onsubmit="return false"><h2>4-20 mA / HART scaling</h2>
+<label>Specific gravity (SG, water = 1)<input type="number" inputmode="decimal" name="sg" value="0.85" min="0" step="any"></label>
+<output aria-live="polite"></output><div class="row"><button type="button" class="btn" data-copy>Copy result</button><button type="button" class="btn ghost" data-sample>Load Fujairah sample</button></div></form>
+<form class="card" id="cMa" onsubmit="return false"><h2>4-20 mA / HART scaling <button type="button" class="tip" data-g="namur" aria-label="What is NAMUR NE43?">?</button></h2>
 <label>Range low (EU)<input type="number" inputmode="decimal" name="lo" value="0" step="any"></label>
 <label>Range high (EU)<input type="number" inputmode="decimal" name="hi" value="20000" step="any"></label>
 <label>Loop current (mA)<input type="number" inputmode="decimal" name="ma" value="12" step="any"></label>
 <label>Or process value (EU)<input type="number" inputmode="decimal" name="pv" step="any" placeholder="optional"></label>
-<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form>
-<form class="card" id="cIo" onsubmit="return false"><h2>I/O and ring capacity</h2>
+<output aria-live="polite"></output><div class="row"><button type="button" class="btn" data-copy>Copy result</button><button type="button" class="btn ghost" data-sample>Load Fujairah sample</button></div></form>
+<form class="card" id="cIo" onsubmit="return false"><h2>I/O and ring capacity <button type="button" class="tip" data-g="mrp" aria-label="What is an MRP fiber ring?">?</button></h2>
 <label>Total I/O points<input type="number" inputmode="numeric" name="io" value="1800" min="0"></label>
 <label>Spare (%)<input type="number" inputmode="numeric" name="sp" value="20" min="0"></label>
 <label>Channels per module<input type="number" inputmode="numeric" name="ch" value="16" min="1"></label>
 <label>Modules per remote station<input type="number" inputmode="numeric" name="ms" value="12" min="1"></label>
 <label>Ring devices (switches, stations, PLCs)<input type="number" inputmode="numeric" name="nd" value="60" min="0"></label>
-<output aria-live="polite"></output><button class="btn" data-copy>Copy result</button></form></div></section>
+<output aria-live="polite"></output><div class="row"><button type="button" class="btn" data-copy>Copy result</button><button type="button" class="btn ghost" data-sample>Load Fujairah sample</button></div></form></div></section>
 
 <section id="reference" aria-labelledby="h-re" hidden><h1 id="h-re">Tag, protocol and troubleshooting lookup</h1>
 <label class="search">Search<input type="search" id="q" placeholder="e.g. MRP, OID, 4-20, sync"></label>
 <p id="cnt" aria-live="polite" class="note"></p><div id="refList" class="grid"></div></section>
 </main>
 <div id="toast" role="status" aria-live="polite"></div>
-<dialog id="iosDlg"><h2>Add to Home Screen</h2><p>In Safari tap <strong>Share</strong>, then <strong>Add to Home Screen</strong>. The guide then opens full screen and works offline.</p><button class="btn" id="iosClose">Got it</button></dialog>
+<dialog id="instDlg" aria-labelledby="instH"><h2 id="instH">Install this app</h2><p>Installing gives full-screen use and offline access on site.</p>
+<h3>iPhone / iPad (Safari)</h3><ol class="steps"><li>Tap the <strong>Share</strong> button.</li><li>Scroll and tap <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong>.</li></ol>
+<h3>Android (Chrome)</h3><ol class="steps"><li>Tap the <strong>three-dot menu</strong>.</li><li>Tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li><li>Tap <strong>Install</strong>.</li></ol>
+<h3>Desktop (Edge or Chrome)</h3><ol class="steps"><li>Click the <strong>install icon</strong> at the right end of the address bar.</li><li>If you do not see it, open the menu: Edge &gt; Apps &gt; Install this site as an app, or Chrome &gt; Cast, save and share &gt; Install page as app.</li><li>Click <strong>Install</strong>.</li></ol>
+<button class="btn" id="instClose">Close</button></dialog>
+<div id="pop" role="status" aria-live="polite" hidden></div>
+<dialog id="clrDlg" aria-labelledby="clrH"><h2 id="clrH">Reset or clear data?</h2><p>This cannot be undone. Export first if you want a copy.</p>
+<div class="row"><button class="btn" id="clrPh">Clear checklist and notes</button><button class="btn" id="clrAll">Clear everything</button><button class="btn ghost" id="clrNo">Cancel</button></div></dialog>
 <script src="./js/app.js"></script>
 </body></html>

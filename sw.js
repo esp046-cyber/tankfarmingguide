@@ -1,4 +1,4 @@
-const CACHE='tankfarming-v2026.1';
+const CACHE='tankfarming-v2026.2';
 const ASSETS=[
  "./",
  "./apple-touch-icon.png",
